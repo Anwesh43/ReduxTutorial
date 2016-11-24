@@ -3,6 +3,9 @@
 
 var INCREMENT = "increment";
 var DECREMENT = "decrement";
+var printCurrentCount = function printCurrentCount(state) {
+   console.log("currentState is " + state.count);
+};
 var counterReducer = function counterReducer(state, action) {
    var newState = Object.assign({}, state);
    if (action.type == INCREMENT) {
@@ -12,9 +15,12 @@ var counterReducer = function counterReducer(state, action) {
 };
 var currState = { count: 0 };
 currState = counterReducer(currState, { type: INCREMENT });
+printCurrentCount(currState);
 currState = counterReducer(currState, { type: INCREMENT });
+printCurrentCount(currState);
 currState = counterReducer(currState, { type: INCREMENT });
+printCurrentCount(currState);
 currState = counterReducer(currState, { type: INCREMENT });
-console.log(currState.count);
+printCurrentCount(currState);
 
 },{}]},{},[1]);

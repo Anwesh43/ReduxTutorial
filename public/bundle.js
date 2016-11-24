@@ -20538,7 +20538,7 @@ var PresentationalComponent = function (_Component) {
             var tasksVisible = this.props.todos.filter(function (task) {
                 return task.visibility;
             });
-            var styleSheet = { border: '1px solid black', width: '100px', height: '100px', textAlign: 'center', textIndent: '5px' };
+            var styleSheet = { border: '1px dotted black', width: '100px', height: '30px', textAlign: 'center', textIndent: '5px' };
             var tasksHtml = tasksVisible.map(function (task, index) {
                 return _react2.default.createElement(
                     'div',

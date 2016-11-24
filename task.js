@@ -51,7 +51,7 @@ class PresentationalComponent extends Component {
     }
     render() {
         var tasksVisible = this.props.todos.filter((task)=>task.visibility)
-        var styleSheet = {border:'1px solid black',width:'100px',height:'100px',textAlign:'center',textIndent:'5px'}
+        var styleSheet = {border:'1px dotted black',width:'100px',height:'30px',textAlign:'center',textIndent:'5px'}
         var tasksHtml = tasksVisible.map((task,index)=><div key={'task'+index}><p style={styleSheet}>{task.text}</p><button ref={'button'+index}>remove</button></div>)
         return (<div>{tasksHtml}<p><button ref="add">Add</button></p></div>)
     }

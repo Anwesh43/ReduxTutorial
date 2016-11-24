@@ -8,5 +8,5 @@ gulp.task('compileES6ForExample',()=>{
   return browserify('index.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('example/bundle.js'))
 })
 gulp.task('watchForChange',()=>{
-    gulp.watch('task.js',['compileES6ForExample'])
+    gulp.watch('*.js',['compileES6ForExample','compileES6ForPublic'])
 })
