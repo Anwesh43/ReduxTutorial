@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-class CircleQuoteComponent extends Component {
+export default class CircleQuoteComponent extends Component {
     constructor(props) {
       super(props)
     }
