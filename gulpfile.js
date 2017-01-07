@@ -13,7 +13,9 @@ gulp.task('compileES6ForChat',()=>{
 gulp.task('compileES6ForQuoteCircle',()=>{
   return browserify('CircleQuotesBox.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('quotesincircle/bundle.js'))
 })
-
+gulp.task('compileES6ForBlockComponent',()=>{
+  return browserify('GameComponent.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('movingballs/bundle.js'))
+})
 gulp.task('watchForChange',()=>{
     gulp.watch('*.js',['compileES6ForExample','compileES6ForPublic'])
 })
