@@ -9,7 +9,8 @@ class GameComponent extends Component {
     }
     componentDidMount() {
         var currState = this.state
-        function ballReducer(state = currState,action) {
+        var refs = this.refs
+        var  ballReducer = (state = currState,action) => {
             var newState = Object.assign({},state)
             for(var i=0;i<state.balls.length;i++) {
                 newState.balls[i].selected = false
@@ -18,13 +19,13 @@ class GameComponent extends Component {
                 newState.balls[action.j].selected = true
             }
             if(action.type == "ADD") {
-               newState.balls.push({selected:true,ref:'ball'+state.balls.length})
+                console.log(action)
+               newState.balls.push({selected:true,ref:'ball'+state.balls.length,init:true,initX:action.x,initY:action.y})
             }
             return newState
         }
         var ballStore = createStore(ballReducer)
         ballStore.subscribe(()=>{
-            console.log(ballStore.getState())
             this.setState(ballStore.getState())
         })
         window.onkeydown = (event)=> {
@@ -48,13 +49,16 @@ class GameComponent extends Component {
                 ballStore.dispatch({type:'CHANGE',j:touchIndex})
             }
             else {
-                ballStore.dispatch({type:'ADD'})
+                ballStore.dispatch({type:'ADD',x,y})
             }
         }
         setInterval(()=>{
           this.state.balls.forEach((ball,index)=>{
               var ballObj = this.refs[ball.ref]
-              console.log(ballObj)
+              if(ball.init) {
+                  ballObj.init(ball.initX,ball.initY)
+                  ball.init = false
+              }
               ballObj.move()
           })
         },100)

@@ -74,6 +74,11 @@ var MovingBlockComponent = function (_Component2) {
             this.movementStore.dispatch({ type: 'MOVE' });
         }
     }, {
+        key: 'init',
+        value: function init(x, y) {
+            this.movementStore.dispatch({ type: 'INIT', x: x, y: y });
+        }
+    }, {
         key: 'changeInKey',
         value: function changeInKey(keyCode) {
             if (this.props.selected) {
@@ -119,12 +124,16 @@ var MovingBlockComponent = function (_Component2) {
                     newState.x += newState.tx;
                     newState.y += newState.ty;
                 }
+                if (action.type == 'INIT') {
+                    newState.x = action.x;
+                    newState.y = action.y;
+                    console.log(newState);
+                }
 
                 return newState;
             }
             this.movementStore = (0, _redux.createStore)(movementReducer);
             this.movementStore.subscribe(function () {
-                console.log(_this3.movementStore.getState());
                 _this3.setState(_this3.movementStore.getState());
             });
         }
@@ -190,7 +199,8 @@ var GameComponent = function (_Component) {
             var _this2 = this;
 
             var currState = this.state;
-            function ballReducer() {
+            var refs = this.refs;
+            var ballReducer = function ballReducer() {
                 var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : currState;
                 var action = arguments[1];
 
@@ -202,13 +212,13 @@ var GameComponent = function (_Component) {
                     newState.balls[action.j].selected = true;
                 }
                 if (action.type == "ADD") {
-                    newState.balls.push({ selected: true, ref: 'ball' + state.balls.length });
+                    console.log(action);
+                    newState.balls.push({ selected: true, ref: 'ball' + state.balls.length, init: true, initX: action.x, initY: action.y });
                 }
                 return newState;
-            }
+            };
             var ballStore = (0, _redux.createStore)(ballReducer);
             ballStore.subscribe(function () {
-                console.log(ballStore.getState());
                 _this2.setState(ballStore.getState());
             });
             window.onkeydown = function (event) {
@@ -233,13 +243,16 @@ var GameComponent = function (_Component) {
                 if (touch) {
                     ballStore.dispatch({ type: 'CHANGE', j: touchIndex });
                 } else {
-                    ballStore.dispatch({ type: 'ADD' });
+                    ballStore.dispatch({ type: 'ADD', x: x, y: y });
                 }
             };
             setInterval(function () {
                 _this2.state.balls.forEach(function (ball, index) {
                     var ballObj = _this2.refs[ball.ref];
-                    console.log(ballObj);
+                    if (ball.init) {
+                        ballObj.init(ball.initX, ball.initY);
+                        ball.init = false;
+                    }
                     ballObj.move();
                 });
             }, 100);

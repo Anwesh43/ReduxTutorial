@@ -28,6 +28,9 @@ export default class MovingBlockComponent extends Component {
     move() {
         this.movementStore.dispatch({type:'MOVE'})
     }
+    init(x,y) {
+        this.movementStore.dispatch({type:'INIT',x:x,y:y})
+    }
     changeInKey(keyCode) {
         if(this.props.selected) {
           switch(keyCode) {
@@ -65,12 +68,16 @@ export default class MovingBlockComponent extends Component {
                 newState.x += newState.tx
                 newState.y += newState.ty
             }
-  
+            if(action.type == 'INIT') {
+                newState.x = action.x
+                newState.y = action.y
+                console.log(newState)
+            }
+
             return newState
         }
         this.movementStore = createStore(movementReducer)
         this.movementStore.subscribe(()=>{
-            console.log(this.movementStore.getState())
             this.setState(this.movementStore.getState())
         })
     }
