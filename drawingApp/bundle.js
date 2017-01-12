@@ -43,14 +43,15 @@ var CanvasComponent = function (_Component) {
             var drawInCanvas = function drawInCanvas() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.strokeStyle = "black";
-                context.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+                context.strokeRect(0, 0, canvas.width, canvas.height);
                 drawingObjects.forEach(function (drawingObject) {
                     drawingObject.draw(context);
                 });
             };
-            setInterval(function () {
-                drawInCanvas();
-            }, 50);
+            drawInCanvas();
+            //  setInterval(()=>{
+            //    drawInCanvas()
+            //  },50)
             canvas.onmousedown = function (event) {
                 if (!isDown) {
                     var drawingObject = {};
@@ -79,6 +80,7 @@ var CanvasComponent = function (_Component) {
                     _this2.setState({ drawingObjects: drawingObjects });
                     isDown = true;
                 }
+                drawInCanvas();
             };
             canvas.onmousemove = function (event) {
                 var l = drawingObjects.length;
@@ -88,6 +90,7 @@ var CanvasComponent = function (_Component) {
                     drawingObject.y_array.push(event.offsetY);
                     drawingObjects[l - 1] = drawingObject;
                     _this2.setState({ drawingObjects: drawingObjects });
+                    drawInCanvas();
                 }
             };
             canvas.onmouseup = function () {
@@ -98,6 +101,7 @@ var CanvasComponent = function (_Component) {
                     drawingObjects[l - 1] = drawingObject;
                     isDown = false;
                     _this2.setState({ drawingObjects: drawingObjects });
+                    drawInCanvas();
                 }
             };
         }

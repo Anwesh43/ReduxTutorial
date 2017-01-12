@@ -13,14 +13,15 @@ export default class CanvasComponent extends Component {
        var drawInCanvas = ()=>{
           context.clearRect(0,0,canvas.width,canvas.height)
           context.strokeStyle = "black"
-          context.strokeRect(10,10,canvas.width-20,canvas.height-20)
+          context.strokeRect(0,0,canvas.width,canvas.height)
           drawingObjects.forEach((drawingObject)=>{
               drawingObject.draw(context)
           })
        }
-       setInterval(()=>{
-         drawInCanvas()
-       },50)
+       drawInCanvas()
+      //  setInterval(()=>{
+      //    drawInCanvas()
+      //  },50)
        canvas.onmousedown = (event)=>{
           if(!isDown) {
               var drawingObject = {}
@@ -51,6 +52,7 @@ export default class CanvasComponent extends Component {
               this.setState({drawingObjects})
               isDown = true
           }
+          drawInCanvas()
        }
        canvas.onmousemove = (event)=>{
           var l = drawingObjects.length
@@ -60,6 +62,7 @@ export default class CanvasComponent extends Component {
               drawingObject.y_array.push(event.offsetY)
               drawingObjects[l-1] = drawingObject
               this.setState({drawingObjects})
+              drawInCanvas()
           }
 
        }
@@ -71,6 +74,7 @@ export default class CanvasComponent extends Component {
                 drawingObjects[l-1] = drawingObject
                 isDown = false
                 this.setState({drawingObjects})
+                drawInCanvas()
           }
        }
     }
