@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import ReactDOM from 'react-dom'
+
 export default class CanvasComponent extends Component {
     constructor(props) {
         super(props)
@@ -24,8 +24,8 @@ export default class CanvasComponent extends Component {
        canvas.onmousedown = (event)=>{
           if(!isDown) {
               var drawingObject = {}
-              drawingObject.x_array=[event.pageX]
-              drawingObject.y_array=[event.pageY]
+              drawingObject.x_array=[event.offsetX]
+              drawingObject.y_array=[event.offsetY]
               drawingObject.isFill=false
               drawingObject.draw = function(ctx) {
                   ctx.beginPath()
@@ -56,8 +56,8 @@ export default class CanvasComponent extends Component {
           var l = drawingObjects.length
           if(isDown && l>0) {
               var drawingObject = drawingObjects[l-1]
-              drawingObject.x_array.push(event.pageX)
-              drawingObject.y_array.push(event.pageY)
+              drawingObject.x_array.push(event.offsetX)
+              drawingObject.y_array.push(event.offsetY)
               drawingObjects[l-1] = drawingObject
               this.setState({drawingObjects})
           }
@@ -80,4 +80,3 @@ export default class CanvasComponent extends Component {
             </canvas>)
     }
 }
-ReactDOM.render(<CanvasComponent/>,document.getElementById('drawing-component'))
