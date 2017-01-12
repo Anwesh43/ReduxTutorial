@@ -17,7 +17,7 @@ gulp.task('compileES6ForBlockComponent',()=>{
   return browserify('GameComponent.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('movingballs/bundle.js'))
 })
 gulp.task('compileForDrawingApp',()=>{
-    return browserify('CanvasComponent.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('drawingApp/bundle.js'))
+    return browserify('DrawingComponent.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('drawingApp/bundle.js'))
 })
 gulp.task('watchForChange',()=>{
     gulp.watch('*.js',['compileES6ForExample','compileES6ForPublic'])
