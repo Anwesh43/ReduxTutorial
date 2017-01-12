@@ -12,6 +12,8 @@ export default class CanvasComponent extends Component {
        var isDown = false
        var drawInCanvas = ()=>{
           context.clearRect(0,0,canvas.width,canvas.height)
+          context.strokeStyle = "black"
+          context.strokeRect(10,10,canvas.width-20,canvas.height-20)
           drawingObjects.forEach((drawingObject)=>{
               drawingObject.draw(context)
           })
@@ -38,6 +40,7 @@ export default class CanvasComponent extends Component {
                       }
                   }
                   if(this.isFill) {
+                      ctx.fillStyle = "#3F51B5"
                       ctx.fill()
                   }
                   else {
@@ -64,7 +67,7 @@ export default class CanvasComponent extends Component {
          var l = drawingObjects.length
           if(isDown && l>0) {
                 var drawingObject = drawingObjects[l-1]
-                drawingObject.isFill = false
+                drawingObject.isFill = true
                 drawingObjects[l-1] = drawingObject
                 isDown = false
                 this.setState({drawingObjects})
@@ -72,6 +75,7 @@ export default class CanvasComponent extends Component {
        }
     }
     render() {
+
         return (<canvas ref="canvas" width='300px' height='300px'>
             </canvas>)
     }

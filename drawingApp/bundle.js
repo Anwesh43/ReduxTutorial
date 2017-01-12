@@ -46,6 +46,8 @@ var CanvasComponent = function (_Component) {
             var isDown = false;
             var drawInCanvas = function drawInCanvas() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
+                context.strokeStyle = "black";
+                context.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
                 drawingObjects.forEach(function (drawingObject) {
                     drawingObject.draw(context);
                 });
@@ -71,6 +73,7 @@ var CanvasComponent = function (_Component) {
                             }
                         }
                         if (this.isFill) {
+                            ctx.fillStyle = "#3F51B5";
                             ctx.fill();
                         } else {
                             ctx.stroke();
@@ -95,7 +98,7 @@ var CanvasComponent = function (_Component) {
                 var l = drawingObjects.length;
                 if (isDown && l > 0) {
                     var drawingObject = drawingObjects[l - 1];
-                    drawingObject.isFill = false;
+                    drawingObject.isFill = true;
                     drawingObjects[l - 1] = drawingObject;
                     isDown = false;
                     _this2.setState({ drawingObjects: drawingObjects });
@@ -105,6 +108,7 @@ var CanvasComponent = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+
             return _react2.default.createElement('canvas', { ref: 'canvas', width: '300px', height: '300px' });
         }
     }]);
