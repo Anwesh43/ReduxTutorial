@@ -19,6 +19,9 @@ gulp.task('compileES6ForBlockComponent',()=>{
 gulp.task('compileForDrawingApp',()=>{
     return browserify('DrawingComponent.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('drawingApp/bundle.js'))
 })
+gulp.task('compileForAnimatedCirc',()=>{
+    browserify('CircleContainerComponents.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('circs/bundle.js'))
+})
 gulp.task('watchForChange',()=>{
     gulp.watch('*.js',['compileES6ForExample','compileES6ForPublic'])
 })
