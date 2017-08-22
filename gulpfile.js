@@ -25,6 +25,9 @@ gulp.task('compileForAnimatedCirc',()=>{
 gulp.task('compileForStoreImpl',()=>{
     browserify('store_impl_test.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('test/bundle.js'))
 })
+gulp.task('compileForTimerCreate',()=>{
+    browserify('TimerCreator.js').transform('babelify',{presets:['es2015','react']}).bundle().pipe(require('fs').createWriteStream('timercreate/bundle.js'))
+})
 gulp.task('watchForChange',()=>{
     gulp.watch('*.js',['compileES6ForExample','compileES6ForPublic'])
 })
