@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {createStore} from 'redux'
+import ReactDOM from 'react-dom'
 const w = window.innerWidth,h = window.innerHeight
 const timerCreateReducer = (state={timers:[]},action) => {
     const newState = Object.assign({},state)
@@ -40,3 +41,30 @@ class TimerComponent extends Component{
         return (<div style={{width:w/12,height:w/12,borderWidth:2,borderStyle:'solid',borderColor:'green',fontSize:30}}>{this.props.time}</div>)
     }
 }
+const getCreateAction = () => {
+    return {type:'CREATE'}
+}
+const getUpdateAction = (index) => {
+    return {type:'UPDATE',id:index}
+}
+class TimerCreateComponent extends Component  {
+    constructor(props) {
+        super(props)
+    }
+    componentDidMount() {
+        var timers = 0
+        window.onmousdown = (event) => {
+            timerStore.dispatch(getCreateAction())
+            timers++
+        }
+        setInterval(()=>{
+            for(var i=0;i<timers.length;i++) {
+                timerStore.dispatch(getUpdateAction(i))
+            }
+        },1000)
+    }
+    render() {
+        return <div><TimerGroupComponent/></div>
+    }
+}
+ReactDOM.render(<TimerCreateComponent/>,document.getElementById('app'))
